@@ -1,3 +1,4 @@
+// pickIndexes(indexes: [Number...]) => (arrayOfElements: [Any...]) => [Any...], throws
 const pickIndexes = indexes => arrayOfElements =>
   indexes.reduce((acc, i) => {
     if (arrayOfElements.length <= i) {
