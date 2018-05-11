@@ -7,6 +7,9 @@ test('should throw an error if we want to pick an index superior to the arrayOfE
   expect(() => pickIndexes([2, 4, 1, 15])([1, 2, 6, 1, 6])).toThrowError(
     `Can not pick index 15 on an array of length 5`
   )
+})
+
+test('should throw an error if we want to pick an index equal to the arrayOfElements length', () => {
   expect(() => pickIndexes([2, 4, 1, 5])([1, 2, 6, 1, 6])).toThrowError(
     `Can not pick index 5 on an array of length 5`
   )
