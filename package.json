@@ -1,0 +1,24 @@
+{
+  "name": "reduss",
+  "version": "1.0.0",
+  "description": "A collection of reduce utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elcoosp/reduss.git"
+  },
+  "keywords": [
+    "reduss",
+    "reduce",
+    "array"
+  ],
+  "author": "elcoosp <elcoosp@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elcoosp/reduss/issues"
+  },
+  "homepage": "https://github.com/elcoosp/reduss#readme"
+}
