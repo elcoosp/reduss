@@ -1,8 +1,9 @@
-/**
+/***
  interface mappers {
    (mapper: Any) => Any
  }
- // mapKeys(mappers: mappers) => (objectToMap: Object) => Object
+
+ mapKeys(mappers: mappers) => (objectToMap: Object) => Object
  */
 const mapKeys = mappers => objectToMap =>
   Object.entries(objectToMap).reduce((acc, [key, val]) => {
