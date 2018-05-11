@@ -1,4 +1,5 @@
 module.exports = {
   pickIndexes: require('./pickIndexes'),
-  sumOnly: require('./sumOnly')
+  sumOnly: require('./sumOnly'),
+  mapKeys: require('./mapKeys')
 }
