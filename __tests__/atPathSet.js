@@ -24,3 +24,9 @@ test('should create the object if none is rovided', () => {
   }
   expect(input).toEqual(output)
 })
+
+test('should preserve previous property on the same key object ', () => {
+  expect(atPathSet('some.prop.one', 1, atPathSet('some.prop.two', 2))).toEqual({
+    some: { prop: { one: 1, two: 2 } }
+  })
+})
