@@ -1,9 +1,7 @@
-/***
- interface mappers {
-   (mapper: Any) => Any
- }
-
- mapKeys(mappers: mappers) => (objectToMap: Object) => Object
+/**
+ * @param {Object<string, function>} mappers Object with keys corresponding to keys and value corresponding to maping function taking the value at objectToMap path
+ * @param {Object} objectToMap The source object for the mapping
+ * @returns {Object} A new object with the mapped keys
  */
 const mapKeys = (mappers, objectToMap) =>
   Object.entries(objectToMap).reduce((acc, [key, val]) => {
