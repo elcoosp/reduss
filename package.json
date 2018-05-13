@@ -14,6 +14,7 @@
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once",
     "build": "babel src/ -d lib/",
+    "build:doc": "jsdoc2md --files 'src/**/*.js' > doc.md",
     "prepare": "npm run build"
   },
   "config": {
