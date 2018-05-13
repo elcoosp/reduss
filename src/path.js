@@ -1,3 +1,5 @@
+const throwE = require('./throwE')
+
 const path = (path, obj) =>
   path
     .split('.')
