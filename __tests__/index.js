@@ -1,11 +1,19 @@
 const pickIndexes = require('../src/pickIndexes')
 const sumOnly = require('../src/sumOnly')
-const index = require('../src')
 const mapKeys = require('../src/mapKeys')
+const mapKeysDeep = require('../src/mapKeysDeep')
+const onObjLeafs = require('../src/onObjLeafs')
+const path = require('../src/path')
+const atPathSet = require('../src/atPathSet')
+const index = require('../src')
 test('should return an object with all the library functions', () => {
   expect(index).toEqual({
     sumOnly,
     pickIndexes,
-    mapKeys
+    mapKeys,
+    mapKeysDeep,
+    onObjLeafs,
+    path,
+    atPathSet
   })
 })
