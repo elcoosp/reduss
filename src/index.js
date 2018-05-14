@@ -3,9 +3,8 @@ module.exports = {
   sumOnly: require('./sumOnly'),
   mapKeys: require('./mapKeys'),
   mapKeysDeep: require('./mapKeysDeep'),
-  onObjLeafs: require('./onObjLeafs'),
+  leafs: require('./leafs'),
   atPathSet: require('./atPathSet'),
   path: require('./path'),
-  throwE: require('./throwE'),
-  isSimpleObj: require('./isSimpleObj')
+  throwE: require('./throwE')
 }
