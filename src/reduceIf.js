@@ -4,7 +4,7 @@
  * @param {function} reducer Take all the reducer argument (acumulator, value, index, array), return the new accumuulator
  * @param {Array} array An array to reduce
  * @param {*} [initAcc=Array] The initial accumulator, default empty array
- * @returns {*} The sum of matching numbers
+ * @returns {*} The reduced value
  * @example
  * // returns 6
  * reduceIf(x => x <= 3, (acc, v) => acc + v, [1,2,3,4], 0)

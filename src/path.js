@@ -4,6 +4,9 @@
  * @param {Object} objToAccess The accessed object
  * @throws If we try to access a non existing property on objToAccess
  * @return {*} The value corresponding to the path
+ * @example
+ * // returns 6
+ * path('a.b.c', { a: { b: { c: 6 } } })
  */
 const path = (path, objToAccess) =>
   path.split('.').reduce((acc, prop) => {

@@ -4,9 +4,7 @@
  * @param {Object}  [baseObject=Object] The base object, serve as the initial accumulator, default {}
  * @returns {Object} A new object with the path provided equal to data, and optionnaly any values present in baseObject
  * @example
- * //returns {
- * some:{ prop: { one: 1, two: 2 } }
- *}
+ * //returns { some: { prop: { one: 1, two: 2 } } }
  *atPathSet('some.prop.one', 1, atPathSet('some.prop.two', 2))
  */
 
