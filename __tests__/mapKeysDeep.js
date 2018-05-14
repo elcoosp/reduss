@@ -47,7 +47,7 @@ test('should return same object if called with an empty object as first arg', ()
   })
 })
 
-test('should return a brand new object and not modiffy the one provided', () => {
+test('should return a brand new object and not modify the one provided', () => {
   const obj = { a: 8, obj: { prop: { last: 6 } } }
   mapKeysDeep(
     {
