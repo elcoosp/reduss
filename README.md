@@ -18,21 +18,19 @@ A passionate love letter to Array.prototype.reduce()
 <dl>
 <dt><a href="#atPathSet">atPathSet(path, data, [baseObject])</a> ⇒ <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#isSimpleObj">isSimpleObj(val)</a> ⇒ <code>boolean</code></dt>
+<dt><a href="#leafs">leafs(obj, [previousPath])</a> ⇒ <code>Array.&lt;PathValueObject&gt;</code></dt>
 <dd></dd>
 <dt><a href="#mapKeys">mapKeys(mappers, objectToMap)</a> ⇒ <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#mapKeysDeep">mapKeysDeep(mappers, objectToMap)</a> ⇒ <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#onObjLeafs">onObjLeafs(fn, obj, [path])</a> ⇒ <code>Void</code></dt>
-<dd></dd>
 <dt><a href="#path">path(path, objToAccess)</a> ⇒ <code>*</code></dt>
 <dd></dd>
 <dt><a href="#pickIndexes">pickIndexes(indexes, arrayOfElements)</a> ⇒ <code>Array.&lt;*&gt;</code></dt>
 <dd></dd>
-<dt><a href="#sumOnly">sumOnly(condition, numbers)</a> ⇒ <code>number</code></dt>
+<dt><a href="#reduceIf">reduceIf(condition, reducer, array, [initAcc])</a> ⇒ <code>*</code></dt>
 <dd></dd>
-<dt><a href="#throwE">throwE(errorMessage)</a></dt>
+<dt><a href="#sumOnly">sumOnly(condition, numbers)</a> ⇒ <code>number</code></dt>
 <dd></dd>
 </dl>
 
@@ -48,27 +46,57 @@ A passionate love letter to Array.prototype.reduce()
 | data         | <code>\*</code>     |                     | The data to set                                               |
 | [baseObject] | <code>Object</code> | <code>Object</code> | The base object, serve as the initial accumulator, default {} |
 
-<a name="isSimpleObj"></a>
+**Example**  
+```js
+//returns { some: { prop: { one: 1, two: 2 } } }
+atPathSet('some.prop.one', 1, atPathSet('some.prop.two', 2))
+```
+<a name="leafs"></a>
 
-## isSimpleObj(val) ⇒ <code>boolean</code>
+## leafs(obj, [previousPath]) ⇒ <code>Array.&lt;PathValueObject&gt;</code>
 **Kind**: global function  
-**Returns**: <code>boolean</code> - Return true if val is an object but not a function, array nor a value  
+**Returns**: <code>Array.&lt;PathValueObject&gt;</code> - An array with object containing the leafs information (path/value)  
 
-| Param | Type            | Description       |
-| ----- | --------------- | ----------------- |
-| val   | <code>\*</code> | The value to test |
+| Param          | Type                | Default            | Description                                                                                                                                                          |
+| -------------- | ------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| obj            | <code>object</code> |                    | The object on which the leafs are selected                                                                                                                           |
+| [previousPath] | <code>array</code>  | <code>array</code> | The accumulated path while iterating on obj properties, default to empty array, needed only for recursion, should not be a passed argument when calling the function |
 
+**Example**  
+```js
+// returns [
+//   { path: ['a', 'b', 'c'], value: 4 },
+//   { path: ['a', 'b', 'e'], value: 6 },
+//   { path: ['a', 'd', 'l'], value: 2 }
+// ]
+leafs({
+    a: {
+      b: { c: 4, e: 6 },
+      d: { l: 2 }
+    }
+  })
+```
 <a name="mapKeys"></a>
 
 ## mapKeys(mappers, objectToMap) ⇒ <code>Object</code>
 **Kind**: global function  
 **Returns**: <code>Object</code> - A new object with the mapped keys  
 
-| Param       | Type                                           | Description                                                                                                            |
-| ----------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| mappers     | <code>Object.&lt;string, function()&gt;</code> | Object with keys corresponding to keys and value corresponding to maping function taking the value at objectToMap path |
-| objectToMap | <code>Object</code>                            | The source object for the mapping                                                                                      |
+| Param       | Type                                           | Description                                                                                                             |
+| ----------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| mappers     | <code>Object.&lt;string, function()&gt;</code> | Object with keys corresponding to paths and value corresponding to maping function taking the value at objectToMap path |
+| objectToMap | <code>Object</code>                            | The source object for the mapping                                                                                       |
 
+**Example**  
+```js
+// returns { str: 'SOMEVALUE', num: 4 }
+mapKeys(
+   { str: x => x.toUpperCase(), num: n => n + 3 },
+   { str: 'someValue',
+     num: 1,
+   }
+)
+```
 <a name="mapKeysDeep"></a>
 
 ## mapKeysDeep(mappers, objectToMap) ⇒ <code>Object</code>
@@ -80,18 +108,26 @@ A passionate love letter to Array.prototype.reduce()
 | mappers     | <code>Object.&lt;string, function()&gt;</code> | Object with keys corresponding to paths (or simple keys) and value corresponding to maping function taking the value at objectToMap path |
 | objectToMap | <code>Object</code>                            | The source object for the mapping                                                                                                        |
 
-<a name="onObjLeafs"></a>
-
-## onObjLeafs(fn, obj, [path]) ⇒ <code>Void</code>
-**Kind**: global function  
-**Returns**: <code>Void</code> - Nothing  
-
-| Param  | Type                  | Default            | Description                                                                                                                                                    |
-| ------ | --------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| fn     | <code>function</code> |                    | The callback receiving the path and value of the leaf as an object                                                                                             |
-| obj    | <code>object</code>   |                    | The object on which the leafs are selected                                                                                                                     |
-| [path] | <code>array</code>    | <code>array</code> | The accumulated path while iterating on obj properties, default to empty, needed only for recursion, should not be a passed argument when calling the function |
-
+**Example**  
+```js
+// returns {
+// obj: {
+//     prop: {
+//        last: 8
+//      }
+//    }
+// }
+mapKeysDeep(
+   {
+     'obj.prop.last': x => x * 2
+   },
+   {
+     obj: {
+       prop: { last: 4 }
+     }
+   }
+ )
+```
 <a name="path"></a>
 
 ## path(path, objToAccess) ⇒ <code>\*</code>
@@ -107,11 +143,16 @@ A passionate love letter to Array.prototype.reduce()
 | path        | <code>string</code> | A string representing the path to access (e.g. 'some.prop.nested') |
 | objToAccess | <code>Object</code> | The accessed object                                                |
 
+**Example**  
+```js
+// returns 6
+path('a.b.c', { a: { b: { c: 6 } } })
+```
 <a name="pickIndexes"></a>
 
 ## pickIndexes(indexes, arrayOfElements) ⇒ <code>Array.&lt;\*&gt;</code>
 **Kind**: global function  
-**Returns**: <code>Array.&lt;\*&gt;</code> - The picked elemnts in the order from indexes argument  
+**Returns**: <code>Array.&lt;\*&gt;</code> - The picked elements in the order of the indexes argument  
 **Throws**:
 
 - Can throw an error if oyu try to pick an index which does not exist on arrayOfElements
@@ -122,6 +163,29 @@ A passionate love letter to Array.prototype.reduce()
 | indexes         | <code>Array.&lt;number&gt;</code> | An array of indexes to pick (the order matter) |
 | arrayOfElements | <code>Array.&lt;\*&gt;</code>     | The array to pick values from                  |
 
+**Example**  
+```js
+// returns [6, 6, 2]
+pickIndexes([2, 4, 1], [1, 2, 6, 1, 6])
+```
+<a name="reduceIf"></a>
+
+## reduceIf(condition, reducer, array, [initAcc]) ⇒ <code>\*</code>
+**Kind**: global function  
+**Returns**: <code>\*</code> - The reduced value  
+
+| Param     | Type                  | Default            | Description                                                                                                                                          |
+| --------- | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| condition | <code>function</code> |                    | Take as first argment the current value and next all the reducer argument (acumulator, index, array) and return true if the reducer should be called |
+| reducer   | <code>function</code> |                    | Take all the reducer argument (acumulator, value, index, array), return the new accumuulator                                                         |
+| array     | <code>Array</code>    |                    | An array to reduce                                                                                                                                   |
+| [initAcc] | <code>\*</code>       | <code>Array</code> | The initial accumulator, default empty array                                                                                                         |
+
+**Example**  
+```js
+// returns 6
+reduceIf(x => x <= 3, (acc, v) => acc + v, [1,2,3,4], 0)
+```
 <a name="sumOnly"></a>
 
 ## sumOnly(condition, numbers) ⇒ <code>number</code>
@@ -133,16 +197,8 @@ A passionate love letter to Array.prototype.reduce()
 | condition | <code>function</code>             | Retun true if the number can be summed |
 | numbers   | <code>Array.&lt;number&gt;</code> | The array of numbers to sum            |
 
-<a name="throwE"></a>
-
-## throwE(errorMessage)
-**Kind**: global function  
-**Throws**:
-
-- Throw a new error with the provided message
-
-
-| Param        | Type                | Description       |
-| ------------ | ------------------- | ----------------- |
-| errorMessage | <code>string</code> | The error message |
-
+**Example**  
+```js
+// returns 6
+sumOnly(x => x <= 3, [1,2,3,4])
+```
