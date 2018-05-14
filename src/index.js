@@ -5,5 +5,6 @@ module.exports = {
   mapKeysDeep: require('./mapKeysDeep'),
   leafs: require('./leafs'),
   atPathSet: require('./atPathSet'),
-  path: require('./path')
+  path: require('./path'),
+  reduceIf: require('./reduceIf')
 }
