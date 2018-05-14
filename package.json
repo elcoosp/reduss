@@ -3,9 +3,7 @@
   "version": "0.0.0-development",
   "description": "A collection of reduce utilities",
   "main": "lib/index.js",
-  "files": [
-    "lib/"
-  ],
+  "files": ["lib/"],
   "scripts": {
     "commit": "git-cz",
     "lint": "eslint src __tests__",
@@ -26,11 +24,7 @@
     "type": "git",
     "url": "https://github.com/elcoosp/reduss.git"
   },
-  "keywords": [
-    "reduss",
-    "reduce",
-    "array"
-  ],
+  "keywords": ["reduss", "reduce", "array"],
   "author": "elcoosp <elcoosp@gmail.com>",
   "license": "MIT",
   "bugs": {
