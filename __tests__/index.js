@@ -6,7 +6,6 @@ const mapKeysDeep = require('../src/mapKeysDeep')
 const leafs = require('../src/leafs')
 const path = require('../src/path')
 const atPathSet = require('../src/atPathSet')
-const throwE = require('../src/throwE')
 
 test('should return an object with all the library functions', () => {
   expect(index).toEqual({
@@ -16,7 +15,6 @@ test('should return an object with all the library functions', () => {
     mapKeysDeep,
     leafs,
     path,
-    atPathSet,
-    throwE
+    atPathSet
   })
 })
