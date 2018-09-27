@@ -46,7 +46,7 @@
     "jest": "^22.4.3",
     "jsdoc-to-markdown": "^4.0.1",
     "semantic-release": "^15.4.0",
-    "travis-deploy-once": "^5.0.0"
+    "travis-deploy-once": "5.0.8"
   },
   "dependencies": {}
 }
